@@ -1,0 +1,428 @@
+/* Reset all margins and paddings to ensure consistency */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set the body font and center the content */
+body {
+  font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+}
+
+/* Main authentication container - full screen */
+.authContainer {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Auth form box styling */
+.authFormBox {
+  flex: 1;
+  width: 50%;
+  height: 100%;
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fdfdfd;
+  z-index: 2;
+  overflow-y: auto;
+}
+
+/* Form box heading styling */
+.authFormBox h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Auth type container styling */
+.authTypeContainer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 30px;
+  margin-bottom: 40px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Form styling */
+.authFormBox form {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Signup Form Layout - New Grid System */
+.signupFormLayout {
+  width: 100%;
+}
+
+.signupGrid {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "profile name"
+    "profile phone"
+    "bio age";
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.profileImageContainer {
+  grid-area: profile;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Image preview container - Updated for grid */
+.imagePreviewContainer {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 2px dashed #ddd;
+}
+
+/* Image preview */
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image placeholder - Updated */
+.imagePlaceholder {
+  text-align: center;
+  color: #888;
+  padding: 10px;
+}
+
+.imagePlaceholder i {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Hidden file input */
+.imageInput {
+  display: none;
+}
+
+/* Image label button - Updated */
+.imageLabel {
+  cursor: pointer;
+  color: #4facfe;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Input Groups - Updated for grid */
+.inputGroup {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.inputGroup i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 16px;
+}
+
+.bioGroup i {
+  top: 18px;
+  transform: none;
+}
+
+/* Grid area assignments */
+.nameGroup {
+  grid-area: name;
+}
+
+.phoneGroup {
+  grid-area: phone;
+}
+
+.bioGroup {
+  grid-area: bio;
+}
+
+.ageGroup {
+  grid-area: age;
+}
+
+/* Input Styling - Updated */
+input, textarea {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 40px;
+  background: #fafafa;
+  transition: all 0.3s ease;
+}
+
+textarea {
+  height: 80px;
+  resize: vertical;
+  padding-top: 10px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Input field focus */
+input:focus, textarea:focus {
+  border-color: #667eea;
+  outline: none;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Error message styling - Updated */
+.errorMessage {
+  display: block;
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Auth button styling - Updated */
+.authBtn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+/* Auth button hover */
+.authBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+/* Auth button disabled */
+.authBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading spinner styling - Updated */
+.loadingSpinner {
+  margin-top: 15px;
+  color: #4facfe;
+  font-size: 14px;
+  text-align: center;
+}
+
+.loadingSpinner i {
+  margin-right: 8px;
+  animation: spin 1s linear infinite;
+}
+
+/* Switch link styling - Updated */
+.switchLink {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.switchLink a {
+  color: #4facfe;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.switchLink a:hover {
+  color: #3a8bdb;
+  text-decoration: underline;
+}
+
+/* Profile image group styling - For non-grid layouts */
+.profileImageGroup {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Gradient slide container styling */
+.gradientSlide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Gradient slide shift left */
+.gradientSlide.shiftLeft {
+  right: 50%;
+}
+
+/* Gradient slide spans */
+.gradientSlide span {
+  position: absolute;
+  bottom: 100px;
+  font-size: 32px;
+  font-weight: 700;
+  font-family: "Crutsen", sans-serif;
+  letter-spacing: 2px;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Login text */
+.gradientSlide .loginText {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+/* Signup text */
+.gradientSlide .signupText {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Login text when shifted */
+.gradientSlide.shiftLeft .loginText {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Signup text when shifted */
+.gradientSlide.shiftLeft .signupText {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+/* Circular image in gradient slide */
+.gradientSlide img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid white;
+  margin-bottom: 30px;
+  transition: all 0.8s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient slide title */
+.gradientSlide h2 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Keyframes for loading spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .authContainer {
+    flex-direction: column;
+  }
+  
+  .authFormBox {
+    width: 100%;
+    height: 50%;
+    padding: 40px 30px;
+    border-width: 2;
+  }
+  
+  .gradientSlide {
+    width: 100%;
+    height: 50%;
+    right: auto;
+    bottom: 0;
+  }
+  
+  .gradientSlide.shiftLeft {
+    right: auto;
+    top: 0;
+    bottom: auto;
+  }
+  
+  .authFormBox h2 {
+    font-size: 28px;
+  }
+  
+  .gradientSlide h2 {
+    font-size: 36px;
+  }
+  
+  .gradientSlide span {
+    font-size: 24px;
+    bottom: 50px;
+  }
+  
+  /* Grid layout adjustments for mobile */
+  .signupGrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "profile"
+      "name"
+      "phone"
+      "age"
+      "bio";
+  }
+  
+  .profileImageContainer {
+    justify-content: center;
+  }
+}
