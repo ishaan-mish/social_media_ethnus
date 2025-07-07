@@ -9,6 +9,7 @@ function PostContent({ post }) {
   const likeRef = useRef(null);
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
+  // Check if user already liked post
   useEffect(() => {
     if (post?.likes && currentUser?._id) {
       setIsLiked(post.likes.includes(currentUser._id));
@@ -17,37 +18,61 @@ function PostContent({ post }) {
 
   const formatDate = (d) => new Date(d).toLocaleDateString('en-US');
 
-const handleLike = async () => {
-  try {
-    const res = await fetch(`http://localhost:5000/api/posts/${post._id}/like`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ userId: currentUser._id })
-    });
+  // Toggle like/unlike using one endpoint
+  const handleLike = async () => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/posts/${post._id}/like`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ userId: currentUser._id })
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (res.ok) {
-      // Use server-confirmed like count and state
-      setIsLiked(data.liked);         // true or false
-      setLikeCount(data.likes);       // backend validated count
+      if (res.ok) {
+        setIsLiked(data.liked);         // from backend true/false
+        setLikeCount(data.likes);       // updated count
 
-      // Animate heart
-      if (likeRef.current) {
-        likeRef.current.classList.add('heart-animate');
-        setTimeout(() => likeRef.current.classList.remove('heart-animate'), 400);
+        if (likeRef.current) {
+          likeRef.current.classList.add('heart-animate');
+          setTimeout(() => likeRef.current.classList.remove('heart-animate'), 400);
+        }
+      } else {
+        console.warn("Like toggle failed:", data.error);
       }
-    } else {
-      console.warn("Like toggle failed:", data.error);
+    } catch (err) {
+      console.error("Error toggling like:", err);
     }
-  } catch (err) {
-    console.error("Error toggling like:", err);
-  }
-};
+  };
+
+  const handleDeletePost = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/posts/${post._id}`, {
+        method: "DELETE"
+      });
+
+      if (res.ok) {
+        alert("Post deleted successfully");
+        window.location.reload(); // or navigate("/profile")
+      } else {
+        const data = await res.json();
+        alert(data.error || "Could not delete post");
+      }
+    } catch (err) {
+      console.error("Delete post error:", err);
+      alert("Server error");
+    }
+  };
 
   if (!post) return null;
+
+  // Check post ownership (post.user can be string or object)
+  const isOwner = post.user === currentUser._id || post.user?._id === currentUser._id;
 
   return (
     <div className="post-content-wrapper">
@@ -64,8 +89,16 @@ const handleLike = async () => {
           </div>
         </div>
 
+        {isOwner && (
+          <button className="delete-post-btn" onClick={handleDeletePost}>
+            🗑 Delete Post
+          </button>
+        )}
+
         <div className="caption-box">
-          <b>{post.user?.userid || "unknown"}</b>{" "}
+          <b>
+            {post.user?.userid || (typeof post.user === 'object' ? post.user.userid : 'unknown')}
+          </b>{" "}
           <b style={{ color: '#999999', fontSize: 12 }}>
             {formatDate(post.createdAt)}
           </b>
