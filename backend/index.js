@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://social-media-ethnus-git-main-ishaan-mishras-projects-2feb93c2.vercel.app/', // ✅ replace with your Vercel URL
+  origin: 'https://social-media-ethnus.vercel.app/', // ✅ replace with your Vercel URL
   credentials: true
 }));
 app.use(express.json());
