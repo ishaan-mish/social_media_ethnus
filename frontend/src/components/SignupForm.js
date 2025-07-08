@@ -170,7 +170,7 @@ function SignupForm({ shiftContainer }) {
 
             <div className="inputGroup nameGroup">
               <i className="fas fa-user" style={{ marginTop: -12 }}></i>
-              <input type="text" name="name" placeholder="User Name" value={formData.name} onChange={handleInputChange} required />
+              <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} required />
               {errors.name && <span className="errorMessage">{errors.name}</span>}
             </div>
 

@@ -192,4 +192,24 @@
 }
 
 
+.delete-post-btn {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #7451eb; /* soft elegant purple */
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
 
+.delete-post-btn:hover {
+  background: #5f3dc4;
+  box-shadow: 0 6px 14px rgba(95, 61, 196, 0.3);
+}
+
+.delete-post-btn i {
+  margin-right: 6px;
+  font-size: 13px;
+}
