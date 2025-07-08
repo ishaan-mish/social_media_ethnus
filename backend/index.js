@@ -5,7 +5,10 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://social-media-ethnus-git-main-ishaan-mishras-projects-2feb93c2.vercel.app/', // ✅ replace with your Vercel URL
+  credentials: true
+}));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
