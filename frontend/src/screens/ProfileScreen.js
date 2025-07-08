@@ -32,7 +32,7 @@ const ProfileScreen = () => {
 
     const fetchProfile = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+        const res = await fetch(`https://your-backend-service.onrender.com/api/users/${userId}`);
         const data = await res.json();
         setProfileData(data);
         setIsFollowing(data.user.followers.includes(currentUser._id));
@@ -59,7 +59,7 @@ const ProfileScreen = () => {
   const handleFollow = async () => {
     const endpoint = isFollowing ? 'unfollow' : 'follow';
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${currentUser._id}/${endpoint}`, {
+      const res = await fetch(`https://your-backend-service.onrender.com/api/users/${currentUser._id}/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ targetId: userId })
@@ -187,7 +187,7 @@ const ProfileScreen = () => {
         <button
           onClick={async () => {
             try {
-              const res = await fetch(`http://localhost:5000/api/users/${user._id}/update`, {
+              const res = await fetch(`https://your-backend-service.onrender.com/api/users/${user._id}/update`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(editForm)

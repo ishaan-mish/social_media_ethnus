@@ -10,7 +10,7 @@ function SearchScreen() {
     if (!query.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/users/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`https://your-backend-service.onrender.com/api/users/search?q=${encodeURIComponent(query)}`);
       const data = await res.json();
       setResults(data);
     } catch (err) {
