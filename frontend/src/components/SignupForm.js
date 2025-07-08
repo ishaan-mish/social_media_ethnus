@@ -1,6 +1,27 @@
 import React, { useState } from 'react';
 import '../cssStyles/styles.css';
 
+const uploadToCloudinary = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "Social_media"); // ✅ Replace this
+  formData.append("cloud_name", "dnrsmjsix");        // ✅ Replace this
+
+  try {
+    const res = await fetch("https://api.cloudinary.com/v1_1/dnrsmjsix/image/upload", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    return data.secure_url; // this is the image URL
+  } catch (err) {
+    console.error("Cloudinary Upload Error:", err);
+    throw new Error("Failed to upload image.");
+  }
+};
+
+
 function SignupForm({ shiftContainer }) {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -73,42 +94,53 @@ function SignupForm({ shiftContainer }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    setIsLoading(true);
-    try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: formData.name,
-          userid: formData.name.toLowerCase().replace(/\s+/g, ''),
-          password: "123456", // default password for now
-          age: parseInt(formData.age),
-          phone: formData.phoneNumber,
-          bio: formData.bio,
-          profilePic: imagePreview || "https://default-image.jpg"
-        })
-      });
+  if (!validateForm()) return;
+  setIsLoading(true);
 
-      const data = await res.json();
-      if (res.ok) {
-        alert("Account created successfully");
-        shiftContainer(); // Switch to login
-      } else {
-        alert(data.error || "Signup failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Server error");
-    } finally {
-      setIsLoading(false);
+  try {
+    let profilePicUrl = "https://via.placeholder.com/100";
+
+    // ⬆️ Upload to Cloudinary if image exists
+    if (formData.profileImage) {
+      profilePicUrl = await uploadToCloudinary(formData.profileImage);
     }
-  };
+
+    // ⬇️ Send registration to backend
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: formData.name,
+        userid: formData.name.toLowerCase().replace(/\s+/g, ''),
+        password: "123456", // if hardcoded
+        age: parseInt(formData.age),
+        phone: formData.phoneNumber,
+        bio: formData.bio,
+        profilePic: profilePicUrl
+      })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      console.log("Signup success:", data);
+      alert("Account created successfully");
+      shiftContainer(); // switch to login
+    } else {
+      alert(data.error || "Signup failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className="authFormBox">
