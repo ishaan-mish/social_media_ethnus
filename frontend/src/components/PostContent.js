@@ -21,7 +21,7 @@ function PostContent({ post }) {
   // Toggle like/unlike using one endpoint
   const handleLike = async () => {
     try {
-      const res = await fetch(`https://your-backend-service.onrender.com/api/posts/${post._id}/like`, {
+      const res = await fetch(`https://social-media-ethnus.onrender.com/api/posts/${post._id}/like`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -52,7 +52,7 @@ function PostContent({ post }) {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`https://your-backend-service.onrender.com/api/posts/${post._id}`, {
+      const res = await fetch(`https://social-media-ethnus.onrender.com/api/posts/${post._id}`, {
         method: "DELETE"
       });
 

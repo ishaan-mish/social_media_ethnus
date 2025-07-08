@@ -46,7 +46,7 @@ const handleImageChange = async (e) => {
     }
 
     try {
-      const res = await fetch("https://your-backend-service.onrender.com/api/posts/create", {
+      const res = await fetch("https://social-media-ethnus.onrender.com/api/posts/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

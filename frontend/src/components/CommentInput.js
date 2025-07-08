@@ -14,7 +14,7 @@ function CommentInput({ postId, onCommentAdded }) {
 
     setLoading(true);
     try {
-      const res = await fetch(`https://your-backend-service.onrender.com/api/posts/${postId}/comment`, {
+      const res = await fetch(`https://social-media-ethnus.onrender.com/api/posts/${postId}/comment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

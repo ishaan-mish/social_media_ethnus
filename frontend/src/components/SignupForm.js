@@ -106,7 +106,7 @@ function SignupForm({ shiftContainer }) {
         profilePicUrl = await uploadToCloudinary(formData.profileImage);
       }
 
-      const res = await fetch("https://your-backend-service.onrender.com/api/auth/register", {
+      const res = await fetch("https://social-media-ethnus.onrender.com/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

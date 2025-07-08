@@ -1,1 +1,1 @@
-export const BASE_URL = "https://your-backend-service.onrender.com/api";
+export const BASE_URL = "https://social-media-ethnus.onrender.com/api";

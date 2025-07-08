@@ -16,7 +16,7 @@ function HomeScreen() {
           return;
         }
 
-        const res = await fetch(`https://your-backend-service.onrender.com/api/feed/${userId}`);
+        const res = await fetch(`https://social-media-ethnus.onrender.com/api/feed/${userId}`);
         const data = await res.json();
         setFeed(data);
       } catch (err) {

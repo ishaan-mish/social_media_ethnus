@@ -23,7 +23,7 @@ function LoginForm({ shiftContainer }) {
     setIsLoading(true);
 
     try {
-      const res = await fetch("https://your-backend-service.onrender.com/api/auth/login", {
+      const res = await fetch("https://social-media-ethnus.onrender.com/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

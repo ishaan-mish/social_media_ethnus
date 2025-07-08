@@ -33,7 +33,7 @@ const handleDeleteProfile = async () => {
   if (!confirm) return;
 
   try {
-    const res = await fetch(`https://your-backend-service.onrender.com/api/users/${user._id}`, {
+    const res = await fetch(`https://social-media-ethnus.onrender.com/api/users/${user._id}`, {
       method: "DELETE"
     });
 
