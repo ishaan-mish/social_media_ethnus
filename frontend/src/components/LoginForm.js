@@ -51,33 +51,51 @@ function LoginForm({ shiftContainer }) {
 
   return (
     <div className="authFormBox">
-      <h2>Welcome Back</h2>
-      <div className="authTypeContainer">Login to Your Account</div>
+      <div className="formCard"> {/* <-- This is the bordered box */}
+        <h2>Welcome Back</h2>
+        <div className="authTypeContainer">Login to Your Account</div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="inputGroup">
-          <i className="fas fa-user"></i>
-          <input type="text" name="username" placeholder="User ID" value={formData.username} onChange={handleInputChange} required />
-        </div>
-        <div style={{ margin: 30 }}></div>
-        <div className="inputGroup">
-          <i className="fas fa-lock"></i>
-          <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange} required />
-        </div>
-
-        <button className="authBtn" type="submit" disabled={isLoading}>
-          {isLoading ? 'LOGGING IN...' : 'LOG IN'}
-        </button>
-
-        {isLoading && (
-          <div className="loadingSpinner">
-            <i className="fas fa-spinner"></i> Authenticating your credentials...
+        <form onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <i className="fas fa-user"></i>
+            <input
+              type="text"
+              name="username"
+              placeholder="User ID"
+              value={formData.username}
+              onChange={handleInputChange}
+              required
+            />
           </div>
-        )}
-      </form>
 
-      <div className="switchLink">
-        Don't have an account? <a href="#" onClick={shiftContainer}>Sign up</a>
+          <div style={{ margin: 30 }}></div>
+
+          <div className="inputGroup">
+            <i className="fas fa-lock"></i>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <button className="authBtn" type="submit" disabled={isLoading}>
+            {isLoading ? 'LOGGING IN...' : 'LOG IN'}
+          </button>
+
+          {isLoading && (
+            <div className="loadingSpinner">
+              <i className="fas fa-spinner"></i> Authenticating your credentials...
+            </div>
+          )}
+        </form>
+
+        <div className="switchLink">
+          Don't have an account? <a href="#" onClick={shiftContainer}>Sign up</a>
+        </div>
       </div>
     </div>
   );

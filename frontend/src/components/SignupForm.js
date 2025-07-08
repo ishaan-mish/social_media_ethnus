@@ -4,8 +4,8 @@ import '../cssStyles/styles.css';
 const uploadToCloudinary = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "Social_media"); // ✅ Replace this
-  formData.append("cloud_name", "dnrsmjsix");        // ✅ Replace this
+  formData.append("upload_preset", "Social_media");
+  formData.append("cloud_name", "dnrsmjsix");
 
   try {
     const res = await fetch("https://api.cloudinary.com/v1_1/dnrsmjsix/image/upload", {
@@ -14,13 +14,12 @@ const uploadToCloudinary = async (file) => {
     });
 
     const data = await res.json();
-    return data.secure_url; // this is the image URL
+    return data.secure_url;
   } catch (err) {
     console.error("Cloudinary Upload Error:", err);
     throw new Error("Failed to upload image.");
   }
 };
-
 
 function SignupForm({ shiftContainer }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,122 +93,120 @@ function SignupForm({ shiftContainer }) {
     return Object.keys(newErrors).length === 0;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!validateForm()) return;
-  setIsLoading(true);
+    if (!validateForm()) return;
+    setIsLoading(true);
 
-  try {
-    let profilePicUrl = "https://via.placeholder.com/100";
+    try {
+      let profilePicUrl = "https://via.placeholder.com/100";
 
-    // ⬆️ Upload to Cloudinary if image exists
-    if (formData.profileImage) {
-      profilePicUrl = await uploadToCloudinary(formData.profileImage);
+      if (formData.profileImage) {
+        profilePicUrl = await uploadToCloudinary(formData.profileImage);
+      }
+
+      const res = await fetch("https://your-backend-service.onrender.com/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: formData.name,
+          userid: formData.name.toLowerCase().replace(/\s+/g, ''),
+          password: "123456",
+          age: parseInt(formData.age),
+          phone: formData.phoneNumber,
+          bio: formData.bio,
+          profilePic: profilePicUrl
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Account created successfully");
+        shiftContainer();
+      } else {
+        alert(data.error || "Signup failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
+    } finally {
+      setIsLoading(false);
     }
-
-    // ⬇️ Send registration to backend
-    const res = await fetch("https://your-backend-service.onrender.com/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: formData.name,
-        userid: formData.name.toLowerCase().replace(/\s+/g, ''),
-        password: "123456", // if hardcoded
-        age: parseInt(formData.age),
-        phone: formData.phoneNumber,
-        bio: formData.bio,
-        profilePic: profilePicUrl
-      })
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      console.log("Signup success:", data);
-      alert("Account created successfully");
-      shiftContainer(); // switch to login
-    } else {
-      alert(data.error || "Signup failed");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Server error");
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="authFormBox">
-      <h2>Join Us Today</h2>
-      <div className="authTypeContainer">Create Your Account</div>
+      <div className="formCard">
+        <h2>Join Us Today</h2>
+        <div className="authTypeContainer">Create Your Account</div>
 
-      <form onSubmit={handleSubmit} className="signupFormLayout">
-        <div className="signupGrid">
-          <div className="profileImageContainer">
-            <div className="imagePreviewContainer">
-              {imagePreview ? (
-                <img src={imagePreview} alt="Profile Preview" className="imagePreview" />
-              ) : (
-                <div className="imagePlaceholder">
-                  <i className="fas fa-camera"></i>
-                  <span>Add Photo</span>
-                </div>
-              )}
+        <form onSubmit={handleSubmit} className="signupFormLayout">
+          <div className="signupGrid">
+            <div className="profileImageContainer">
+              <div className="imagePreviewContainer">
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Profile Preview" className="imagePreview" />
+                ) : (
+                  <div className="imagePlaceholder">
+                    <i className="fas fa-camera"></i>
+                    <span>Add Photo</span>
+                  </div>
+                )}
+              </div>
+              <input
+                type="file"
+                id="profileImage"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="imageInput"
+              />
+              <label htmlFor="profileImage" className="imageLabel">
+                Choose Profile Picture
+              </label>
             </div>
-            <input
-              type="file"
-              id="profileImage"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="imageInput"
-            />
-            <label htmlFor="profileImage" className="imageLabel">
-              Choose Profile Picture
-            </label>
+
+            <div className="inputGroup nameGroup">
+              <i className="fas fa-user" style={{ marginTop: -12 }}></i>
+              <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} required />
+              {errors.name && <span className="errorMessage">{errors.name}</span>}
+            </div>
+
+            <div className="inputGroup phoneGroup">
+              <i className="fas fa-phone" style={{ marginTop: -12 }}></i>
+              <input type="tel" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleInputChange} required />
+              {errors.phoneNumber && <span className="errorMessage">{errors.phoneNumber}</span>}
+            </div>
+
+            <div className="inputGroup bioGroup">
+              <i className="fas fa-edit"></i>
+              <textarea name="bio" placeholder="Tell us about yourself..." value={formData.bio} onChange={handleInputChange} rows="3" required />
+              {errors.bio && <span className="errorMessage">{errors.bio}</span>}
+            </div>
+
+            <div className="inputGroup ageGroup">
+              <i className="fas fa-birthday-cake" style={{ marginTop: -21 }}></i>
+              <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleInputChange} min="10" max="120" required />
+              {errors.age && <span className="errorMessage">{errors.age}</span>}
+            </div>
           </div>
 
-          <div className="inputGroup nameGroup">
-            <i className="fas fa-user" style={{ marginTop: -12 }}></i>
-            <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} required />
-            {errors.name && <span className="errorMessage">{errors.name}</span>}
-          </div>
+          <button className="authBtn" type="submit" disabled={isLoading}>
+            {isLoading ? 'CREATING ACCOUNT...' : 'SIGN UP'}
+          </button>
 
-          <div className="inputGroup phoneGroup">
-            <i className="fas fa-phone" style={{ marginTop: -12 }}></i>
-            <input type="tel" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleInputChange} required />
-            {errors.phoneNumber && <span className="errorMessage">{errors.phoneNumber}</span>}
-          </div>
+          {isLoading && (
+            <div className="loadingSpinner">
+              <i className="fas fa-spinner"></i> Setting up your new account...
+            </div>
+          )}
+        </form>
 
-          <div className="inputGroup bioGroup">
-            <i className="fas fa-edit"></i>
-            <textarea name="bio" placeholder="Tell us about yourself..." value={formData.bio} onChange={handleInputChange} rows="3" required />
-            {errors.bio && <span className="errorMessage">{errors.bio}</span>}
-          </div>
-
-          <div className="inputGroup ageGroup">
-            <i className="fas fa-birthday-cake" style={{ marginTop: -21 }}></i>
-            <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleInputChange} min="10" max="120" required />
-            {errors.age && <span className="errorMessage">{errors.age}</span>}
-          </div>
+        <div className="switchLink">
+          Already have an account? <a href="#" onClick={shiftContainer}>Login</a>
         </div>
-
-        <button className="authBtn" type="submit" disabled={isLoading}>
-          {isLoading ? 'CREATING ACCOUNT...' : 'SIGN UP'}
-        </button>
-
-        {isLoading && (
-          <div className="loadingSpinner">
-            <i className="fas fa-spinner"></i> Setting up your new account...
-          </div>
-        )}
-      </form>
-
-      <div className="switchLink">
-        Already have an account? <a href="#" onClick={shiftContainer}>Login</a>
       </div>
     </div>
   );

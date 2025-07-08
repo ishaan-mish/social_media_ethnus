@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { IoSend } from 'react-icons/io5';
+import { FaRegCommentDots } from 'react-icons/fa';
 
 function CommentInput({ postId, onCommentAdded }) {
   const [text, setText] = useState('');
@@ -36,18 +38,34 @@ function CommentInput({ postId, onCommentAdded }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="comment-input-container">
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Write a comment..."
-        className="comment-input"
-      />
-      <button type="submit" className="comment-submit-btn" disabled={loading}>
-        {loading ? '...' : 'Post'}
-      </button>
-    </form>
+    <div className="comment-input-container" style={{ padding: '16px', borderTop: '1px solid #e0e0e0' }}>
+      <div className="comment-input-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'white', border: '1px solid #ddd', borderRadius: '25px', padding: '8px 16px' }}>
+        <div className="react-icon" ><FaRegCommentDots size={20} color="#61DAFB" /></div>
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Write a comment..."
+          className="comment-input"
+          style={{ flex: 1, border: 'none', outline: 'none', fontSize: '14px', padding: '8px 0' }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSubmit(e);
+            }
+          }}
+        />
+        <button 
+          type="button" 
+          onClick={handleSubmit} 
+          className="boost-btn" 
+          disabled={loading}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
+        >
+          {loading ? '...' : <IoSend size={18} color="#4CAF50" />}
+        </button>
+      </div>
+    </div>
   );
 }
 

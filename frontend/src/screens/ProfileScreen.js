@@ -248,7 +248,7 @@ const ProfileHeader = ({ user, postCount, onFollow, isFollowing, isOwnProfile, o
       {isFollowing ? 'Following' : 'Follow'}
     </button>
   ) : (
-    <button className="edit-btn" onClick={onEdit}>
+    <button className="follow-btn" onClick={onEdit}>
       Edit Profile
     </button>
   )}

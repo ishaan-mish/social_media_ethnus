@@ -93,7 +93,8 @@ function PostContent({ post }) {
           <button className="delete-post-btn" onClick={handleDeletePost}>
             🗑 Delete Post
           </button>
-        )}
+        )} 
+        
 
         <div className="caption-box">
           <b>
