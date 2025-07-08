@@ -6,7 +6,13 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://social-media-ethnus.vercel.app/', // ✅ replace with your Vercel URL
+  origin: (origin, callback) => {
+    if (!origin || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
