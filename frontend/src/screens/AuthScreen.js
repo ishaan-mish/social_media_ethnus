@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import GradientSlide from '../components/GradientSlide';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import '../cssStyles/styles.css';
@@ -13,7 +12,6 @@ function AuthScreen() {
 
 return (
   <div className="authContainer">
-    <GradientSlide isShifted={isShifted} />
     {isShifted ? (
       <SignupForm shiftContainer={shiftContainer} />
     ) : (

@@ -61,7 +61,7 @@ const handleImageChange = async (e) => {
       const data = await res.json();
       if (res.ok) {
         console.log("Post created:", data);
-        navigate("/home");
+        navigate("/profile");
       } else {
         alert(data.error || "Failed to post");
       }
